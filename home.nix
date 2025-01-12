@@ -7,6 +7,7 @@
     ++ (import ./packages/dependency.nix { inherit pkgs; })
     ++ (import ./packages/brew-nix.nix) { inherit pkgs; };
   programs.zsh = import ./packages/zsh.nix { inherit pkgs; };
+  programs.tmux = import ./packages/tmux.nix {inherit pkgs; };
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
