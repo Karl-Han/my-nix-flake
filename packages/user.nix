@@ -1,8 +1,12 @@
 {pkgs, ... }: [
   pkgs.aria2
 
-  pkgs.nixpkgs-fmt
+  # dev
   pkgs.rustup
+  pkgs.poetry
+  pkgs.sphinx
+
+  pkgs.nixpkgs-fmt
   pkgs.zsh-autosuggestions
   pkgs.tmux
 ]
