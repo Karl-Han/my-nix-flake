@@ -14,13 +14,6 @@
   environment.pathsToLink = [ "/share/zsh" ];
   programs.zsh = {
     enable = true;
-
-    # Add custom directory to fpath
-    shellInit = ''
-      fpath+=("/opt/homebrew/share/zsh/site-functions")
-      # for zsh-completions homebrew package
-      fpath+=("/opt/homebrew/share/zsh-completions")
-    '';
   };
   # this part is managed by home-manager
   # List packages installed in system profile. To search by name, run:

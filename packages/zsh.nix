@@ -28,4 +28,10 @@
     ];
   };
   plugins = import ./zsh_plugins.nix {pkgs = inputs.pkgs;};
+  # Add custom directory to fpath
+  initExtraBeforeCompInit = ''
+    fpath+=("/opt/homebrew/share/zsh/site-functions")
+    # for zsh-completions homebrew package
+    fpath+=("/opt/homebrew/share/zsh-completions")
+  '';
 }
