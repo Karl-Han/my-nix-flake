@@ -1,0 +1,2 @@
+Squashed commit:
+- [github action] add github action to push master automatically.

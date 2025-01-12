@@ -1,0 +1,57 @@
+name: Squash and Push to Master
+
+on:
+  push:
+    branches:
+      - unsquashed
+
+jobs:
+  squash-and-push:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Checkout the repository
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      # Step 2: Configure Git user
+      - name: Set Git User
+        run: |
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+
+      # Step 3: Fetch all branches
+      - name: Fetch all branches
+        run: git fetch --all
+
+      # Step 4: Checkout the `unsquashed` branch
+      - name: Checkout unsquashed branch
+        run: git checkout unsquashed
+
+      # Step 5: Cherry-pick all commits without committing
+      - name: Cherry-pick changes without committing
+        run: |
+          # Create a new branch for squashing
+          git checkout --orphan squashed-temp
+
+          # Cherry-pick all commits into the new branch without committing
+          for COMMIT in $(git rev-list --reverse unsquashed); do
+            git cherry-pick --no-commit $COMMIT || true
+          done
+
+          # Generate a commit message from all commits
+          echo "Squashed commit:" > squashed_commit_message.txt
+          for COMMIT in $(git rev-list --reverse unsquashed); do
+            MESSAGE=$(git log --format=%B -n 1 $COMMIT)
+            echo "- $MESSAGE" >> squashed_commit_message.txt
+          done
+
+          # Commit the squashed changes
+          git add --all
+          git commit -F squashed_commit_message.txt
+
+      # Step 6: Force push to `master` branch
+      - name: Force push to master
+        run: |
+          git branch -f master
+          git push origin master --force
