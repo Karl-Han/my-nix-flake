@@ -18,6 +18,8 @@
     # Add custom directory to fpath
     shellInit = ''
       fpath+=("/opt/homebrew/share/zsh/site-functions")
+      # for zsh-completions homebrew package
+      fpath+=("/opt/homebrew/share/zsh-completions")
     '';
   };
   # this part is managed by home-manager

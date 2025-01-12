@@ -24,9 +24,21 @@
     #   url = "github:homebrew/homebrew-bundle";
     #   flake = false;
     # };
+
+    # install homebrew packages without homebrew
+    # but just use their code
+    brew-nix = {
+      url = "github:BatteredBunny/brew-nix";
+      inputs.brew-api.follows = "brew-api";
+    };
+    brew-api = {
+      url = "github:BatteredBunny/brew-api";
+      flake = false;
+    };
   };
 
-  outputs = inputs@{ self, nix-darwin, nixpkgs, home-manager, nix-homebrew, ...}:
+  outputs =
+    inputs@{ self, nix-darwin, nixpkgs, home-manager, nix-homebrew, brew-nix, ... }:
     {
       # Build darwin flake using:
       # $ darwin-rebuild build --flake .#Kunlins-MacBook-Pro
@@ -34,13 +46,14 @@
       # $ darwin-rebuild build --flake .
       darwinConfigurations."Kunlins-MacBook-Pro" = nix-darwin.lib.darwinSystem {
         specialArgs = { inherit inputs; };
-        modules = [ 
+        modules = [
           # nix-darwin
-          ./configuration.nix 
+          ./configuration.nix
 
           # home-manager
           home-manager.darwinModules.home-manager
           {
+            nixpkgs.overlays = [ brew-nix.overlays.default ];
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
 
@@ -51,7 +64,8 @@
           }
 
           # homebrew
-        nix-homebrew.darwinModules.nix-homebrew (import ./nix-homebrew.nix)
+          nix-homebrew.darwinModules.nix-homebrew
+          (import ./nix-homebrew.nix)
         ];
       };
     };
