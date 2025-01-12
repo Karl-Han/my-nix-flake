@@ -1,5 +1,8 @@
 {pkgs, ... }: [
   pkgs.aria2
-  # zsh
+
+  pkgs.nixpkgs-fmt
+  pkgs.rustup
   pkgs.zsh-autosuggestions
+  pkgs.tmux
 ]
