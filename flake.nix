@@ -1,44 +1,54 @@
 {
   description = "my macOS nix flakes configuration";
 
-  inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
-    nix-darwin.url = "github:LnL7/nix-darwin";
-    nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
-    home-manager.url = "github:nix-community/home-manager";
-    home-manager.inputs.nixpkgs.follows = "nixpkgs";
+  inputs =
+    {
+      nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+      nix-darwin.url = "github:LnL7/nix-darwin";
+      nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
+      home-manager.url = "github:nix-community/home-manager";
+      home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
-    # homebrew
-    nix-homebrew.url = "github:zhaofengli-wip/nix-homebrew";
-    # Optional: Declarative tap management
-    # should handle with import ./homebrew-taps.nix
-    # homebrew-core = {
-    #   url = "github:homebrew/homebrew-core";
-    #   flake = false;
-    # };
-    # homebrew-cask = {
-    #   url = "github:homebrew/homebrew-cask";
-    #   flake = false;
-    # };
-    # homebrew-bundle = {
-    #   url = "github:homebrew/homebrew-bundle";
-    #   flake = false;
-    # };
+      # homebrew
+      nix-homebrew.url = "github:zhaofengli-wip/nix-homebrew";
+      # Optional: Declarative tap management
+      homebrew-core = {
+        url = "github:homebrew/homebrew-core";
+        flake = false;
+      };
+      homebrew-cask = {
+        url = "github:homebrew/homebrew-cask";
+        flake = false;
+      };
+      homebrew-bundle = {
+        url = "github:homebrew/homebrew-bundle";
+        flake = false;
+      };
 
-    # install homebrew packages without homebrew
-    # but just use their code
-    brew-nix = {
-      url = "github:BatteredBunny/brew-nix";
-      inputs.brew-api.follows = "brew-api";
+      # install homebrew packages without homebrew
+      # but just use their code
+      brew-nix = {
+        url = "github:BatteredBunny/brew-nix";
+        inputs.brew-api.follows = "brew-api";
+      };
+      brew-api = {
+        url = "github:BatteredBunny/brew-api";
+        flake = false;
+      };
     };
-    brew-api = {
-      url = "github:BatteredBunny/brew-api";
-      flake = false;
-    };
-  };
 
   outputs =
-    inputs@{ self, nix-darwin, nixpkgs, home-manager, nix-homebrew, brew-nix, ... }:
+    inputs@{ self
+    , nixpkgs
+    , nix-darwin
+    , home-manager
+    , brew-nix
+    , nix-homebrew
+    , homebrew-core
+    , homebrew-cask
+    , homebrew-bundle
+    , ...
+    }:
     {
       # Build darwin flake using:
       # $ darwin-rebuild build --flake .#Kunlins-MacBook-Pro
@@ -65,7 +75,7 @@
 
           # homebrew
           nix-homebrew.darwinModules.nix-homebrew
-          (import ./nix-homebrew.nix)
+          (import ./nix-homebrew.nix { inherit homebrew-core homebrew-cask homebrew-bundle; })
         ];
       };
     };

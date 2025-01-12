@@ -1,4 +1,4 @@
-{
+{ homebrew-core, homebrew-cask, homebrew-bundle, ... }@inputs: {
   nix-homebrew = {
     # Install Homebrew under the default prefix
     enable = true;
@@ -11,5 +11,11 @@
 
     # Automatically migrate existing Homebrew installations
     autoMigrate = true;
+    taps = {
+      "homebrew/homebrew-core"   = homebrew-core;
+      "homebrew/homebrew-cask"   = homebrew-cask;
+      "homebrew/homebrew-bundle"   = homebrew-bundle;
+    };
+    mutableTaps = true;
   };
 }
