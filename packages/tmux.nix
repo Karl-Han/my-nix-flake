@@ -5,6 +5,7 @@
   mouse = true;
   newSession = true;
   shell = "${pkgs.zsh}/bin/zsh";
+  tmuxp.enable = true;
 
   prefix = "C-b";
   enable = true;
