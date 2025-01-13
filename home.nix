@@ -8,6 +8,7 @@
     ++ (import ./packages/brew-nix.nix) { inherit pkgs; };
   programs.zsh = import ./packages/zsh.nix { inherit pkgs; };
   programs.tmux = import ./packages/tmux.nix {inherit pkgs; };
+  programs.fzf = import ./packages/fzf.nix { inherit pkgs; };
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
