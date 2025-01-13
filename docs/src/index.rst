@@ -3,7 +3,7 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-project_template documentation
+Nix Environment Configuration
 ==============================
 
 Add your content using ``reStructuredText`` syntax. See the
@@ -15,3 +15,4 @@ documentation for details.
    :maxdepth: 2
    :caption: Contents:
 
+   dev-tools/index
