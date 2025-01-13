@@ -58,7 +58,7 @@
         specialArgs = { inherit inputs; };
         modules = [
           # nix-darwin
-          ./configuration.nix
+          ./hosts/macos/configuration.nix
 
           # home-manager
           home-manager.darwinModules.home-manager

@@ -6,7 +6,7 @@
   environment.shells = [
     pkgs.zsh
     pkgs.bash
-  ] ++ (import ./packages/system.nix { inherit pkgs; });
+  ] ++ (import ../../packages/system.nix { inherit pkgs; });
   # Used for backwards compatibility, please read the changelog before changing.
   # $ darwin-rebuild changelog
   system.stateVersion = 5;
@@ -18,13 +18,8 @@
   # this part is managed by home-manager
   # List packages installed in system profile. To search by name, run:
   # $ nix-env -qaP | grep wget
-  # environment.systemPackages =
-  #   (import ./packages/system.nix { inherit pkgs; })
-  #   ++ (import ./packages/user.nix { inherit pkgs; })
-  #   ++ (import ./packages/dependency.nix { inherit pkgs; });
-  # environment.systemPath =
-  #   (import ./path/system.nix)
-  #   ++ (import ./path/user.nix);
+  # environment.systemPackages = []
+  # environment.systemPath = []
 
   # Enable alternative shell support in nix-darwin.
   # programs.fish.enable = true;

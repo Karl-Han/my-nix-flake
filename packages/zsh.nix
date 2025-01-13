@@ -34,4 +34,5 @@
     # for zsh-completions homebrew package
     fpath+=("/opt/homebrew/share/zsh-completions")
   '';
+  initExtra = builtins.readFile ../dotfiles/shell_globals.sh;
 }
