@@ -78,5 +78,11 @@
           (import ./nix-homebrew.nix { inherit homebrew-core homebrew-cask homebrew-bundle; })
         ];
       };
+      nixosConfigurations.lax = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        modules = [
+          ./hosts/lax/configuration.nix
+        ];
+      };
     };
 }
